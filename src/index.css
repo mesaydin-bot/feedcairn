@@ -1,0 +1,269 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-serif: "Fraunces Variable", "Fraunces", "Iowan Old Style", Georgia, serif;
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+}
+
+:root,
+[data-theme="light"] {
+  --bg: #f4f1ea;
+  --bg-elevated: #fffcf6;
+  --sidebar: #ebe6db;
+  --line: #d9d1c3;
+  --text: #1c1914;
+  --muted: #6b6458;
+  --accent: #1a8f5a;
+  --accent-fg: #ffffff;
+  --unread: #1a8f5a;
+  --danger: #b42318;
+  --saved: #b45309;
+  --shadow: 0 10px 30px rgba(50, 40, 20, 0.08);
+}
+
+[data-theme="dark"] {
+  --bg: #101318;
+  --bg-elevated: #171b22;
+  --sidebar: #0c0f14;
+  --line: #2a313c;
+  --text: #e8edf4;
+  --muted: #93a0b3;
+  --accent: #3dce86;
+  --accent-fg: #062314;
+  --unread: #3dce86;
+  --danger: #f97066;
+  --saved: #f6c177;
+  --shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+.article-body {
+  font-family: var(--reader-font, var(--font-serif));
+  font-size: var(--reader-font-size, 1.12rem);
+  line-height: 1.7;
+  max-width: 42rem;
+  color: var(--text);
+}
+
+.article-title {
+  font-family: var(--reader-font, var(--font-serif));
+}
+
+.article-body img,
+.article-body video {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+/* Feed article iframes only — never AI artifact frames (height is measured). */
+.article-body iframe:not(.ai-html-iframe) {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+.article-body a {
+  color: var(--accent);
+}
+
+.article-body pre,
+.article-body code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+}
+
+.article-body pre {
+  overflow-x: auto;
+  background: color-mix(in srgb, var(--sidebar) 80%, var(--line));
+  padding: 0.85rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.article-body blockquote {
+  border-left: 3px solid var(--accent);
+  margin: 1rem 0;
+  padding: 0.2rem 0 0.2rem 1rem;
+  color: var(--muted);
+}
+
+
+.article-body h1,
+.article-body h2,
+.article-body h3,
+.article-body h4 {
+  font-family: inherit;
+  font-weight: 600;
+  line-height: 1.35;
+  margin: 1.25em 0 0.45em;
+  color: var(--text);
+}
+
+.article-body h2 { font-size: 1.25em; }
+.article-body h3 { font-size: 1.12em; }
+.article-body h4 { font-size: 1.05em; }
+
+.article-body p {
+  margin: 0 0 0.9em;
+}
+
+.article-body ul,
+.article-body ol {
+  margin: 0 0 0.9em;
+  padding-left: 1.35em;
+}
+
+.article-body li {
+  margin: 0.35em 0;
+}
+
+.article-body li > p {
+  margin: 0;
+}
+
+.article-body strong {
+  font-weight: 650;
+}
+
+.ai-answer-body {
+  max-width: 42rem;
+}
+
+.ai-answer-body--wide,
+.ai-answer-body:has(.ai-html-preview),
+.ai-answer-body:has(.mermaid) {
+  max-width: min(100%, 56rem);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--muted) 45%, transparent);
+  border-radius: 999px;
+}
+
+/* GFM tables in Reader + AI answer preview */
+.article-body .table-wrap,
+.ai-answer-body .table-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 1em 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.article-body table,
+.ai-answer-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92em;
+  line-height: 1.45;
+  margin: 1em 0;
+  display: table;
+}
+
+.article-body th,
+.article-body td,
+.ai-answer-body th,
+.ai-answer-body td {
+  border: 1px solid var(--line);
+  padding: 0.45em 0.7em;
+  text-align: left;
+  vertical-align: top;
+}
+
+.article-body thead th,
+.ai-answer-body thead th {
+  background: color-mix(in srgb, var(--sidebar) 85%, var(--line));
+  font-weight: 650;
+  color: var(--text);
+}
+
+.article-body tbody tr:nth-child(even) td,
+.ai-answer-body tbody tr:nth-child(even) td {
+  background: color-mix(in srgb, var(--sidebar) 45%, transparent);
+}
+
+.article-body tbody tr:hover td,
+.ai-answer-body tbody tr:hover td {
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+.ai-answer-body .ai-html-preview,
+.ai-answer-body .mermaid {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0.75rem 0;
+}
+.ai-answer-body .ai-html-preview {
+  overflow: hidden;
+  padding: 0;
+  border-radius: 0.5rem;
+  border: 1px solid var(--line);
+  background: #fff;
+  min-height: 320px;
+}
+/* AI artifact iframe: height from postMessage — never height:auto */
+.ai-answer-body .ai-html-iframe {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-height: 320px;
+  border: 0;
+  border-radius: 0.5rem;
+  background: #fff;
+  /* Prefer internal scroll when content exceeds capped height */
+  overflow: auto;
+}
+.ai-answer-body .mermaid {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.75rem 0.5rem;
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--sidebar) 70%, transparent);
+  color: var(--text);
+  text-align: center;
+}
+.ai-answer-body .mermaid svg {
+  margin: 0 auto;
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+/* Fallback when mermaid fails: keep source readable as code */
+.ai-answer-body pre code.language-mermaid,
+.ai-answer-body pre .language-mermaid {
+  display: block;
+  white-space: pre-wrap;
+  font-size: 0.85em;
+}
+

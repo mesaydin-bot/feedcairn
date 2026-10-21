@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Feedcairn demo AI CLI. Reads the prompt from stdin and prints a deterministic briefing.
+# Demo only: point Settings → command at this file to test the AI panel without any account. Never put it on PATH.
+set -euo pipefail
+prompt="$(cat || true)"
+title="$(printf '%s\n' "$prompt" | awk -F'Title: ' '/Title: /{print $2; exit}')"
+provider="$(basename "$0")"
+cat <<EOF
+[Feedcairn stub · ${provider}]
+
+This is local demo output. Replace this binary with a real CLI, or set Settings → ${provider} command to your tool.
+
+$(if [ -n "${title}" ]; then echo "Article: ${title}"; fi)
+
+## Takeaways
+- The model would normally summarize the article you selected.
+- Feedcairn sent the prompt on stdin (see README for the invocation shape).
+- No API keys are stored in the app; your CLI owns credentials.
+
+## Why it matters
+A working CLI on PATH is all Feedcairn needs. Keep using this stub in CI or when you want a guaranteed response.
+
+--- prompt excerpt ---
+$(printf '%s' "$prompt" | head -c 400)
+EOF

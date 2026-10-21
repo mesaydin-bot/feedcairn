@@ -1,0 +1,55 @@
+[package]
+name = "feedcairn"
+version = "0.1.0"
+description = "Feedcairn — a local-first desktop RSS/Atom reader"
+authors = ["Feedcairn"]
+edition = "2021"
+default-run = "feedcairn"
+
+[lib]
+name = "feedcairn_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[[bin]]
+name = "feedcairn"
+path = "src/main.rs"
+
+[[bin]]
+name = "feedcairn-web"
+path = "src/bin/web.rs"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-opener = "2"
+tauri-plugin-dialog = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+rusqlite = { version = "0.32", features = ["bundled"] }
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "gzip", "deflate", "brotli"] }
+feed-rs = "2.3"
+ammonia = "4"
+roxmltree = "0.20"
+thiserror = "2"
+tokio = { version = "1", features = ["full"] }
+axum = { version = "0.8", features = ["json"] }
+getrandom = "0.2"
+chrono = { version = "0.4", features = ["serde"] }
+url = "2"
+dirs = "6"
+once_cell = "1"
+html2text = "0.14"
+readability = { version = "0.3", default-features = false }
+time = { version = "0.3", features = ["parsing", "formatting"] }
+futures = "0.3"
+tokio-stream = "0.1"
+base64 = "0.22"
+
+[dev-dependencies]
+tempfile = "3"
+
+[profile.release]
+codegen-units = 1
+lto = true

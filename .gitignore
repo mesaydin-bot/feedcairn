@@ -1,0 +1,43 @@
+# --- Never publish (privacy / build artifacts) ---
+._*
+.DS_Store
+Thumbs.db
+node_modules/
+dist/
+dist-ssr/
+build/
+coverage/
+*.log
+.env
+.env.*
+.local/
+agent-tools/
+uploads/
+*.tar.gz
+*.db
+*.sqlite
+*.sqlite3
+# Personal feed lists never belong in the repo; only the generic sample may stay.
+*.opml
+!**/sample.opml
+# CLI login state must never be committed (each user signs in to their own CLI)
+.codex/
+.kimi/
+.gemini/
+.cursor/
+auth.json
+credentials*.json
+# Editors
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.sw?
+
+# Tauri
+src-tauri/target/
+src-tauri/gen/
+
+# TypeScript build info
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
